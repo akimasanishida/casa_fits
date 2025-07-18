@@ -8,9 +8,9 @@ from .Image import Image
 
 def load_fits(
     fits_file: str,
-    width: int = None,
-    height: int = None,
-    center_radec: tuple[float, float] = None,
+    width: int | None = None,
+    height: int | None = None,
+    center_radec: tuple[float, float] | None = None,
 ) -> Image:
     """
     Create an Image object from a FITS file.
@@ -31,16 +31,16 @@ def load_fits(
     # Load the FITS file and extract the data and header information
     try:
         with fits.open(fits_file) as hdul:
-            image.data = hdul[0].data
-            header = hdul[0].header
-            image.width = header["NAXIS1"]
-            image.height = header["NAXIS2"]
+            image.data = np.array(hdul[0].data)  # type: ignore
+            header = hdul[0].header  # type: ignore
+            image.width = header.get("NAXIS1", image.data.shape[1])
+            image.height = header.get("NAXIS2", image.data.shape[0])
             image.nchan = header.get("NAXIS3", 1)
-            image.center_radec = (header["CRVAL1"], header["CRVAL2"])
-            image.center_pix = (header["CRPIX1"] - 1, header["CRPIX2"] - 1)
+            image.center_radec = (header.get("CRVAL1", 0.0), header.get("CRVAL2", 0.0))
+            image.center_pix = (header.get("CRPIX1", image.width // 2) - 1, header.get("CRPIX2", image.height // 2) - 1)
             image.freq0 = header.get("CRVAL3", 0.0)
-            image.incr_x = header["CDELT1"]
-            image.incr_y = header["CDELT2"]
+            image.incr_x = header.get("CDELT1", 0.0)
+            image.incr_y = header.get("CDELT2", 0.0)
             image.incr_hz = header.get("CDELT3", 0.0)
             image.unit_x = header.get("CUNIT1", "deg")
             image.unit_y = header.get("CUNIT2", "deg")
