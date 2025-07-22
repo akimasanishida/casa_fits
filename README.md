@@ -42,7 +42,7 @@ fig.tight_layout()
 plt.show()
 ```
 
-![example image of imshow](sample/0_imshow.png)
+![example image of imshow](https://raw.githubusercontent.com/akimasanishida/casa_fits/refs/heads/main/sample/0_imshow.png)
 
 See more samples at `sample` directory (more sample codes will come soon...).
 
