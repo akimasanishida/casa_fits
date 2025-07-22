@@ -42,9 +42,7 @@ fig.tight_layout()
 plt.show()
 ```
 
-<center>
-  <img src="sample/0_imshow.png" alt="example image of imshow" width=50%>
-</center>
+![example image of imshow](sample/0_imshow.png)
 
 See more samples at `sample` directory (more sample codes will come soon...).
 
