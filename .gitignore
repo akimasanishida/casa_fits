@@ -12,3 +12,6 @@ wheels/
 
 # Sphinx build directory
 docs/
+
+# Other files
+*.log
