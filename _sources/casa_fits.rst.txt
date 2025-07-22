@@ -12,6 +12,14 @@ casa\_fits.Image module
    :show-inheritance:
    :undoc-members:
 
+casa\_fits.azimuth\_cut module
+------------------------------
+
+.. automodule:: casa_fits.azimuth_cut
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
 casa\_fits.detectpeak module
 ----------------------------
 

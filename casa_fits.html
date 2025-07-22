@@ -51,6 +51,10 @@
 <li class="toctree-l4"><a class="reference internal" href="#casa_fits.Image.Image"><code class="docutils literal notranslate"><span class="pre">Image</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#module-casa_fits.azimuth_cut">casa_fits.azimuth_cut module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#casa_fits.azimuth_cut.azimuth_cut"><code class="docutils literal notranslate"><span class="pre">azimuth_cut()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#module-casa_fits.detectpeak">casa_fits.detectpeak module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#casa_fits.detectpeak.detectpeak"><code class="docutils literal notranslate"><span class="pre">detectpeak()</span></code></a></li>
 </ul>
@@ -200,6 +204,46 @@ This is useful for the image that has only one stokes and channel.</p>
 </dl>
 </dd></dl>
 
+</dd></dl>
+
+</section>
+<section id="module-casa_fits.azimuth_cut">
+<span id="casa-fits-azimuth-cut-module"></span><h2>casa_fits.azimuth_cut module<a class="headerlink" href="#module-casa_fits.azimuth_cut" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="casa_fits.azimuth_cut.azimuth_cut">
+<span class="sig-name descname"><span class="pre">azimuth_cut</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#casa_fits.Image.Image" title="casa_fits.Image.Image"><span class="pre">Image</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inclination</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pa</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beam_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stokes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chan</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">tuple</span></span></span><a class="headerlink" href="#casa_fits.azimuth_cut.azimuth_cut" title="Link to this definition"></a></dt>
+<dd><p>Extract an azimuthal cut from an image using a deprojected elliptical annulus.</p>
+<p>This implementation computes the deprojected radius for each pixel,
+given the inclination and position angle, and selects pixels that lie
+within an annulus defined by [radius_px - beam_size/2, radius_px + beam_size/2].
+The azimuthal angle is computed in the deprojected frame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>img</strong> (<a class="reference internal" href="#casa_fits.Image.Image" title="casa_fits.Image.Image"><em>Image</em></a>) – The Image object.</p></li>
+<li><p><strong>radius</strong> (<em>float</em>) – The radius in arcsec.</p></li>
+<li><p><strong>inclination</strong> (<em>float</em>) – The inclination angle in degrees.</p></li>
+<li><p><strong>pa</strong> (<em>float</em>) – The position angle in degrees.</p></li>
+<li><p><strong>beam_factor</strong> (<em>float</em><em>, </em><em>optional</em>) – Sampling size based on the beam size. Defaults to 0.5.</p></li>
+<li><p><strong>stokes</strong> (<em>int</em><em>, </em><em>optional</em>) – Stokes parameter index. Defaults to 0.</p></li>
+<li><p><strong>chan</strong> (<em>int</em><em>, </em><em>optional</em>) – Channel index. Defaults to 0.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A tuple of three numpy arrays:</dt><dd><ul class="simple">
+<li><p>The azimuthal angle (in degrees) bins.</p></li>
+<li><p>The mean intensity in each bin.</p></li>
+<li><p>The standard deviation of the intensity in each bin.</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
