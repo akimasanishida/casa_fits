@@ -35,19 +35,10 @@ def radial_profile(
     # Calculate the center of the image
     center_x = img.width // 2
     center_y = img.height // 2
-
-    # Calculate the beam size
-    if img.beam is None:
-        raise ValueError("The image does not have a beam size.")
+    
     if img.incr_x is None or img.incr_y is None:
         raise ValueError("Image increment x or y is None.")
     img.convert_axes_unit('arcsec')
-    beam_maj = img.beam[0] / np.abs(img.incr_x)
-    beam_min = img.beam[1] / np.abs(img.incr_y)
-
-    # Determine the larger beam size (to define the sampling step and width)
-    beam_size = max(beam_maj, beam_min)
-    # sampling_size = ceil(beam_size * beam_factor)
 
     # Convert azimuth angle to radians
     # azimuth is measured from the north
