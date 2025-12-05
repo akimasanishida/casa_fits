@@ -5,7 +5,7 @@ from .utilities import downsample_data
 
 
 def radial_cut(
-    img: Image, azimuth: float, beam_factor: float = 0.5, stokes: int = 0, chan: int = 0
+    img: Image, azimuth: float, sample_size: int = 5, stokes: int = 0, chan: int = 0
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """
     Radial line cut of the image along the specified azimuth angle from the center.
@@ -13,7 +13,7 @@ def radial_cut(
     Args:
         img (Image): The Image object.
         azimuth (float): The azimuth angle in degrees.
-        beam_factor (float, optional): Sampling size based on the beam size. Defaults to 0.5.
+        sample_size (int, optional): The number of samples to take along the radial line. Defaults to 5.
         stokes (int, optional): Stokes parameter index. Defaults to 0.
         chan (int, optional): Channel index. Defaults to 0.
 
@@ -40,7 +40,7 @@ def radial_cut(
 
     # Determine the larger beam size (to define the sampling step and width)
     beam_size = max(beam_x, beam_y)
-    sampling_size = ceil(beam_size * beam_factor)
+    # sampling_size = ceil(beam_size * beam_factor)
 
     # Convert azimuth angle to radians
     # azimuth is measured from the north
@@ -60,7 +60,7 @@ def radial_cut(
 
     # Loop over points along the line
     step = 0
-    search_range = int(sqrt(sampling_size**2 + sampling_size**2) / 2 + 1)
+    search_range = int(sqrt(sample_size**2 + sample_size**2) / 2 + 1)
     while True:
         # Calculate the current position
         x = int(center_x + step * direction_x)
@@ -72,7 +72,7 @@ def radial_cut(
 
         line_r.append(step * np.abs(img.incr_x))
 
-        v_para = np.array([direction_x, direction_y]) * sampling_size * 0.5
+        v_para = np.array([direction_x, direction_y]) * sample_size * 0.5
         v_perp = np.array([-direction_y, direction_x]) * beam_size * 0.5
         verts = [
             rect_center + v_para + v_perp,
@@ -114,6 +114,6 @@ def radial_cut(
             line_mean.append(None)
             line_std.append(None)
 
-        step += sampling_size
+        step += sample_size
 
     return np.array(line_r), np.array(line_mean), np.array(line_std)
