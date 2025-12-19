@@ -1,24 +1,25 @@
+from dataclasses import dataclass, field
 import numpy as np
 from .utilities import unitConvDict
 
 
+@dataclass
 class Image:
-    def __init__(self):
-        self.imagename: str | None = None
-        self.data: np.ndarray | None = None
-        self.width: int | None = None
-        self.height: int | None = None
-        self.nchan: int | None = None
-        self.center_radec: tuple[float, float] | None = None  # (RA, Dec)
-        self.center_pix: tuple[float, float] | None = None  # (X, Y)
-        self.freq0: float | None = None
-        self.incr_x: float | None = None
-        self.incr_y: float | None = None
-        self.incr_hz: float | None = None
-        self.unit_x: str | None = None
-        self.unit_y: str | None = None
-        self.unit_data: str | None = None
-        self.beam: tuple[float, float, float] | None = None  # (major, minor, angle)
+    imagename: str = ""
+    data: np.ndarray = field(default_factory=lambda: np.empty((0, 0)))
+    width: int | None = None
+    height: int | None = None
+    nchan: int | None = None
+    center_radec: tuple[float, float] = (0, 0)  # (RA, Dec)
+    center_pix: tuple[float, float] = (0, 0)  # (X, Y)
+    freq0: float = 0
+    incr_x: float = 0
+    incr_y: float = 0
+    incr_hz: float = 0
+    unit_x: str = "arcsec"
+    unit_y: str = "arcsec"
+    unit_data: str = ""
+    beam: tuple[float, float, float] = (0, 0, 0)  # (major, minor, angle)
 
     def convert_axes_unit(self, unit: str):
         """

@@ -10,7 +10,7 @@ def load_fits(
     fits_file: str,
     width: int | None = None,
     height: int | None = None,
-    center_radec: tuple[float, float] | None = None,
+    center_radec: tuple[float, float] | tuple[str, str] | None = None,
 ) -> Image:
     """
     Create an Image object from a FITS file.
@@ -63,7 +63,7 @@ def load_fits(
                 center_coord = SkyCoord(
                     center_radec[0],
                     center_radec[1],
-                    unit=(u.hourangle, u.deg),
+                    unit=(u.hourangle, u.deg),  # pyright: ignore[reportAttributeAccessIssue]
                     frame="icrs",
                 )
                 image.center_pix = wcs.world_to_pixel(center_coord)
@@ -122,9 +122,9 @@ def load_fits(
 
 def load_image(
     imagename: str,
-    width: int = None,
-    height: int = None,
-    center_radec: tuple[float, float] = None,
+    width: int | None = None,
+    height: int | None = None,
+    center_radec: tuple[float, float] | tuple[str, str] | None = None,
 ) -> Image:
     """
     Create an Image object from a CASA image file.
